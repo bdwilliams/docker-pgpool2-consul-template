@@ -1,0 +1,10 @@
+listen_addresses = '*'
+port = 9999
+enable_pool_hba = on
+
+{{range $index, $service := service "postgresql"}}
+backend_hostname{{$index}} = '{{.Address}}'
+backend_port{{$index}} = {{.Port}}
+backend_weight{{$index}} = 1
+backend_flag{{$index}} = 'ALLOW_TO_FAILOVER'
+{{end}}
